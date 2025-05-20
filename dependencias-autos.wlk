@@ -15,14 +15,18 @@ class Dependencia {
     //pedidos
     method pesoTotalFlota() = flota.sum({rodado => rodado.peso()})
     method estaBienEquipada() = flota.size() >= 3 && self.todosPuedenIrA100()
-    method capacidadTotalEnColor(color) = self.autosDeColor(color).sum()
+    method capacidadTotalEnColor(color) = self.autosDeColor(color).sum({rodado => rodado.capacidad()})
     method colorRodadoMasRapido() = flota.max({rodado => rodado.velocidadMaxima()}).color()
-    method capacidadFaltante() = self.capacidadTotal() - empleados
+    method capacidadFaltante() =  0.max(empleados - self.capacidadTotal())
     method esGrande() = empleados >= 40 && flota.size() >= 5
 
     //Metodos de indicacion
     method agregarAFlota(rodado){
         flota.add(rodado)
+    }
+
+    method agregarMuchosAFlota(listaRodado){
+        flota.addAll(listaRodado)
     }
 
     method quitarDeFlota(rodado){

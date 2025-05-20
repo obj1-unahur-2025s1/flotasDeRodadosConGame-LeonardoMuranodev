@@ -21,6 +21,13 @@ class RenaultKwid {
 }
 
 class AutoEspecial {
+    var property color
+    var property capacidad
+    var property peso
+    var property velocidadMaxima
+}
+/*
+class AutoEspecial {
     //Aca, sus propiedades se instancian, pero una vez que eso pasa, no se puede cambiar
     //Simulamos que el auto solo puede cambiar su color, eso si podria, ya que es var, no const
     var property color
@@ -32,6 +39,7 @@ class AutoEspecial {
     //la velocidad no se podra cambiar, y si pasa 200, devolvera 200
     method velocidadMaxima() = velocidadMaxima.min(topeVelMax.tope())
 }
+*/
 
 //Tope de velocidad que afecta a los objetos de la clase AutoEspecial
 object topeVelMax {

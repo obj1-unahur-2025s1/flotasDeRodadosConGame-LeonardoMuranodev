@@ -1,0 +1,53 @@
+import dependencias-autos.*
+import autos.*
+
+describe "Test con dos dependencias"{
+    
+    //Dependencias
+    const deportes = new Dependencia (empleados=45)
+    const cultura = new Dependencia (empleados=31)
+
+    //Autos
+    //En comun
+    const cachito = new Corsa(color="rojo")
+
+    //Deportes
+    const corsaAzul = new Corsa(color="azul")
+    const corsaVerde = new Corsa(color="verde")
+    const kwidConTanque1 = new RenaultKwid(tieneTanqueAdicional=true)
+    const autoEspecial = new AutoEspecial(color="beige",capacidad=5,velocidadMaxima=160,peso=1200)
+
+    //Cultura
+    const kwidConTanque2 = new RenaultKwid(tieneTanqueAdicional=true)
+    const kwidConTanque3 = new RenaultKwid(tieneTanqueAdicional=true)
+    const kwidSinTanque = new RenaultKwid(tieneTanqueAdicional=false)
+
+    method initialize(){
+        trafic.motor(bataton)
+        trafic.interior(popular)
+
+        //Agrego los autos a las dependencias
+        deportes.agregarMuchosAFlota([cachito, corsaAzul, corsaVerde, kwidConTanque1, autoEspecial])
+        cultura.agregarMuchosAFlota([cachito, kwidConTanque2, kwidConTanque3, kwidSinTanque, trafic])
+    }
+
+    //Comprobado menos el comentado
+    test "Comprobar asserts de Deportes" {
+        assert.equals(1300 + 1300 + 1300 + 1350 + 1200 ,deportes.pesoTotalFlota())
+        assert.that(deportes.estaBienEquipada())
+        assert.equals(7, deportes.capacidadTotalEnColor("azul"))
+        assert.equals("beige", deportes.colorRodadoMasRapido())
+        assert.that(deportes.esGrande())
+        assert.equals(45 - deportes.capacidadTotal(), deportes.capacidadFaltante())
+    }
+
+    test "Comprobar asserts de Cultura" {
+        assert.equals(1300 + 1350 + 1350 + 1200 + trafic.peso(), cultura.pesoTotalFlota())
+        assert.notThat(cultura.estaBienEquipada())
+        assert.equals(10, cultura.capacidadTotalEnColor("azul"))
+        assert.equals("rojo", cultura.colorRodadoMasRapido())
+        assert.notThat(cultura.esGrande())
+        assert.equals(31 - cultura.capacidadTotal(), cultura.capacidadFaltante())
+    }
+
+}
