@@ -8,11 +8,18 @@ import wollok.game.*
 
 
 class Corsa {
-    var position = game.at(0,0) // Esto es lo mismo: --- new Position(x = 0, y = 0)
+    /*// Esto es lo mismo: --- new Position(x = 0, y = 0). cada vez que movamos a algo, va a crear una 
+    nueva instancia de position, guardandola en la variable*/
+    const ubicaciones = [] //guardamos la ubicaciones donde paso el corso
+    var position = game.at(4,7)
+
+    //Atributos de cada corsa basicos 
     var property color
     method capacidad() = 4
     method velocidadMaxima() = 150
     method peso() = 1300
+
+    method 
 }
 
 //Al momento de instanciar, debo especificar si tiene tanque adicional
