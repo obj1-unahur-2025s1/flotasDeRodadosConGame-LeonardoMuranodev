@@ -4,7 +4,11 @@ que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o 
 //Clases de autos
 
 //Al momento de instanciar, debo especificar el color
+import wollok.game.*
+
+
 class Corsa {
+    var position = game.at(0,0) // Esto es lo mismo: --- new Position(x = 0, y = 0)
     var property color
     method capacidad() = 4
     method velocidadMaxima() = 150
