@@ -93,3 +93,62 @@ describe "Prubas de los pedidos" {
         assert.that(pedido3.autoPuedeHacerPedido(trafic))
     }
 }
+
+describe "Test de registro de pedidos de cada dependencia" {
+    //Dependencias
+    const deportes = new Dependencia (empleados=45)
+    const cultura = new Dependencia (empleados=31)
+
+    //Pedidos
+    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = ["rojo", "azul"])
+    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = ["verde", "azul"])
+    const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 9, cantidadPasajeros = 10, coloresIncompatibles = ["blanco", "azul"])
+    const pedido4 = new Pedido(distanciaEnKm = 1500, tiempoEnHs = 13, cantidadPasajeros = 2, coloresIncompatibles = ["rojo"])
+
+    //Autos
+    //Deportes
+    const corsaAzul = new Corsa(color="azul")
+    const corsaVerde = new Corsa(color="verde")
+
+    //Cultura
+    const cachito = new Corsa(color="rojo")
+    const kwidSinTanque = new RenaultKwid(tieneTanqueAdicional=false)
+
+    method initialize(){
+        trafic.motor(pulenta)
+        trafic.interior(popular)
+
+        //Agrego los autos a las dependencias
+        deportes.agregarMuchosAFlota([corsaAzul, corsaVerde, trafic])
+        cultura.agregarMuchosAFlota([cachito, kwidSinTanque, trafic])
+
+        //Agrego los pedidos a las dependecias
+        deportes.agregarPedidos([pedido1, pedido2, pedido3])
+        cultura.agregarPedidos([pedido1, pedido2, pedido4])
+    }
+
+    test "La cantidad total de pasajeros de los pedidos de la dep deportes es 18" {
+        assert.equals(18, deportes.totalPasajerosPaquetes())
+    }
+    
+    test "La cantidad total de pasajeros de los pedidos de la dep cultura es 10" {
+        assert.equals(10, cultura.totalPasajerosPaquetes())
+    }
+
+    test "SI es cierto que el color azul es restringido en todos los pedidos de la dep deportes" {
+        assert.that(deportes.esColorIncompatibleDeTodosLosPedidos("azul"))
+    }
+    
+    test "NO es cierto que el color azul es restringido en todos los pedidos de la dep cultura" {
+        assert.notThat(cultura.esColorIncompatibleDeTodosLosPedidos("azul"))
+    }
+
+    test "EL pedido2 y pedido3 no pueden ser llevados por ninguno de los autos de la dep deportes"{
+        deportes.relajarTodosLosPedidos()
+        assert.equals([pedido2, pedido3], deportes.pedidosQueNoPuedenSerRealizados())
+    }
+
+    test "EL pedido1 no pueden ser llevados por ninguno de los autos de la dep cultura"{
+        assert.equals([pedido1, pedido2], cultura.pedidosQueNoPuedenSerRealizados())
+    }
+}
