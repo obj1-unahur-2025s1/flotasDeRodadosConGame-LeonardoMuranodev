@@ -2,7 +2,7 @@ class Pedido {
     const property distanciaEnKm
     var property tiempoEnHs
     const property cantidadPasajeros
-    const property coloresIncompatibles
+    const property coloresIncompatibles = []
 
     //Metodos de consulta
 

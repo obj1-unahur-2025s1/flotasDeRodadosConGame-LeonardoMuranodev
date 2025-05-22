@@ -1,5 +1,6 @@
 import dependencias-autos.*
 import autos.*
+import pedidos.*
 
 describe "Test con dos dependencias"{
     
@@ -49,5 +50,46 @@ describe "Test con dos dependencias"{
         assert.notThat(cultura.esGrande())
         assert.equals(31 - cultura.capacidadTotal(), cultura.capacidadFaltante())
     }
+}
 
+describe "Prubas de los pedidos" {
+    
+    //Pedidos
+    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = ["verde", "azul"])
+    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = ["rojo"])
+    const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 11, cantidadPasajeros = 10, coloresIncompatibles = [])
+    
+    //Autos
+    const cachito = new Corsa(color="rojo")
+    const autoEspecial = new AutoEspecial(color="beige",capacidad=5,velocidadMaxima=160,peso=1200)
+    const corsaVerde = new Corsa(color="verde")
+
+    method initialize(){
+        trafic.motor(bataton)
+        trafic.interior(popular)
+    }
+    
+    test "El pedido1 puede ser llevado por cachito y autoEspecial, pero no por corsaVerde, ya que su color es restringido y tampoco la trafic por que no supera la velocidad minima"{
+        assert.that(pedido1.autoPuedeHacerPedido(cachito))
+        assert.that(pedido1.autoPuedeHacerPedido(autoEspecial))
+        assert.notThat(pedido1.autoPuedeHacerPedido(corsaVerde))
+        assert.notThat(pedido1.autoPuedeHacerPedido(trafic))
+    }
+
+    test "El pedido2 puede ser llevado por el autoEspecial y el corsa verde ya que se relajo su tiempo, pero no por cachito, ya que su color es restringido y tampoco la trafic por que no supera la velocidad minima"{
+        pedido2.relajar()
+        assert.notThat(pedido2.autoPuedeHacerPedido(cachito))
+        assert.that(pedido2.autoPuedeHacerPedido(autoEspecial))
+        assert.that(pedido2.autoPuedeHacerPedido(corsaVerde))
+        assert.notThat(pedido2.autoPuedeHacerPedido(trafic))
+    }
+
+    test "El pedido3 al ser acelerado, solo puede ser llevado por la trafic. No puede ser llevado por cachito, el corsaVerde o autoEspecial debido a que no cubren la capacidad minima"{
+        trafic.motor(pulenta)
+        pedido3.acelerar()
+        assert.notThat(pedido3.autoPuedeHacerPedido(cachito))
+        assert.notThat(pedido3.autoPuedeHacerPedido(autoEspecial))
+        assert.notThat(pedido3.autoPuedeHacerPedido(corsaVerde))
+        assert.that(pedido3.autoPuedeHacerPedido(trafic))
+    }
 }

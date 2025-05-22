@@ -1,12 +1,11 @@
+import wollok.game.*
+
 /*Palabra reservada class para crear una clase, tengo que ponerle los metodos que tendra, y los atributos
 que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o con el property*/
 
 //Clases de autos
 
 //Al momento de instanciar, debo especificar el color
-import wollok.game.*
-
-
 class Corsa {
     /*// Esto es lo mismo: --- new Position(x = 0, y = 0). cada vez que movamos a algo, va a crear una 
     nueva instancia de position, guardandola en la variable*/
@@ -18,8 +17,6 @@ class Corsa {
     method capacidad() = 4
     method velocidadMaxima() = 150
     method peso() = 1300
-
-    method 
 }
 
 //Al momento de instanciar, debo especificar si tiene tanque adicional
@@ -91,13 +88,10 @@ object bataton {
 }
 
 
-
-
-
-
-
-//Estructura para crear un objeto, debemos darle los atributos no definidos
-//const listaDeCorsa = [] //Lista vacia, pero tendra tres objetos corsa.
-//listaDeCorsa.add(new Corsa(color="rojo")) // Crea una instacia de la clase Corsa con el color rojo
-//listaDeCorsa.add(new Corsa(color="rojo")) // Crea una instacia de la clase Corsa con el color rojo
-//listaDeCorsa.add(new Corsa(color="verde")) // Crea una instacia de la clase Corsa con el color verde
+/*
+Estructura para crear un objeto, debemos darle los atributos no definidos
+const listaDeCorsa = [] //Lista vacia, pero tendra tres objetos corsa.
+listaDeCorsa.add(new Corsa(color="rojo"))  Crea una instacia de la clase Corsa con el color rojo
+listaDeCorsa.add(new Corsa(color="rojo"))  Crea una instacia de la clase Corsa con el color rojo
+listaDeCorsa.add(new Corsa(color="verde"))  Crea una instacia de la clase Corsa con el color verde
+*/
