@@ -1,0 +1,21 @@
+import wollok.game.*
+import autos.*
+
+program ejemplo {
+
+    //Caracteriticas del juego
+    game.title("Prueba corsa")
+    game.width(15)
+    game.height(15)
+
+    //Objetos
+    const cachito = new Corsa(color=rojo)
+    game.addVisualCharacter(cachito)
+
+    //eventos del teclado
+    keyboard.r().onPressDo {cachito.color(rojo)}
+    keyboard.a().onPressDo {cachito.color(azul)}
+    keyboard.v().onPressDo {cachito.color(verde)}
+
+    game.start()
+}

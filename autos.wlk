@@ -17,6 +17,19 @@ class Corsa {
     method capacidad() = 4
     method velocidadMaxima() = 150
     method peso() = 1300
+    method image() = color.image()
+    method position() = position
+
+    //Metodos de consulta
+    method pasoPor(posicion) = ubicaciones.contains(posicion)
+    method pasoPorFila(numero) = ubicaciones.map({pos => pos.x()}).contains(numero)
+    method recorrioFilas(listaNumeros) = listaNumeros.all({n => self.pasoPorFila(n)})
+
+    //Metodos de indicacion
+    method position(nuevaPosicion) {
+        position = nuevaPosicion
+        ubicaciones.add(nuevaPosicion)
+    }
 }
 
 //Al momento de instanciar, debo especificar si tiene tanque adicional
@@ -85,6 +98,19 @@ object pulenta {
 object bataton {
     method velocidadMaxima() = 80
     method peso() = 500
+}
+
+//Colores
+
+object rojo {
+    method image() {return "autitorojo.png"} 
+}
+object azul {
+    method image() {return "autitoAzul.png"} 
+}
+
+object verde {
+    method image() {return "autitoVerde.png"} 
 }
 
 
