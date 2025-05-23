@@ -1,6 +1,54 @@
 import wollok.game.*
 import autos.*
 
+object gestorAutos {
+    const autos = []
+    var property autoPrincipal = null
+
+    method autos() = autos
+
+    //metodos indicacion
+
+    method agregarAutos(listaAutos){
+        autos.addAll(listaAutos)
+    }
+
+    method inicializar(listaAutos) {
+        //Agregamos todos los autos
+        self.agregarAutos(listaAutos)
+
+        //Seleccionamos el primero como principal, y los demas, los agregamos como visuales
+        self.seleccionarAuto(autos.first())
+        autos.drop(1).forEach({auto => game.addVisual(auto)})
+
+        //Eventos de teclado
+
+        //cambios de colores
+        keyboard.r().onPressDo({ autoPrincipal.color(rojo) })
+        keyboard.v().onPressDo({ autoPrincipal.color(verde) })
+        keyboard.a().onPressDo({ autoPrincipal.color(azul) })
+
+        //Cambio del principal
+        keyboard.num1().onPressDo({ self.seleccionarAuto(autos.get(0)) })
+        keyboard.num2().onPressDo({ self.seleccionarAuto(autos.get(1)) })
+        keyboard.num3().onPressDo({ self.seleccionarAuto(autos.get(2)) })
+    }
+
+    method seleccionarAuto(nuevoPrincipal) {
+        //Si es diferente al auto qeu ya estaba...
+        if (autoPrincipal != nuevoPrincipal) {
+            //Si es diferente a null, es para evaluar que ya habia un auto valido antes
+            if (autoPrincipal != null) {
+                game.removeVisual(autoPrincipal)
+                game.addVisual(autoPrincipal)
+            }
+            
+            autoPrincipal = nuevoPrincipal
+            game.addVisualCharacter(autoPrincipal)
+        }
+    }
+}
+
 program ejemplo {
 
     //Caracteriticas del juego
@@ -10,12 +58,10 @@ program ejemplo {
 
     //Objetos
     const cachito = new Corsa(color=rojo)
-    game.addVisualCharacter(cachito)
+    const pepito = new Corsa(color=azul, position=game.at(5,7))
+    const juancito = new Corsa(color=verde, position=game.at(6,7))
 
-    //eventos del teclado
-    keyboard.r().onPressDo {cachito.color(rojo)}
-    keyboard.a().onPressDo {cachito.color(azul)}
-    keyboard.v().onPressDo {cachito.color(verde)}
+    gestorAutos.inicializar([cachito, pepito, juancito])
 
     game.start()
 }
