@@ -1,5 +1,6 @@
 import wollok.game.*
 import autos.*
+import direcciones-regiones.*
 
 object gestorAutos {
     const autos = []
@@ -23,15 +24,22 @@ object gestorAutos {
 
         //Eventos de teclado
 
-        //cambios de colores
+        //cambios de colores: r:red, g:green y b:blue
         keyboard.r().onPressDo({ autoPrincipal.color(rojo) })
-        keyboard.v().onPressDo({ autoPrincipal.color(verde) })
-        keyboard.a().onPressDo({ autoPrincipal.color(azul) })
+        keyboard.g().onPressDo({ autoPrincipal.color(verde) })
+        keyboard.b().onPressDo({ autoPrincipal.color(azul) })
 
         //Cambio del principal
         keyboard.num1().onPressDo({ self.seleccionarAuto(autos.get(0)) })
         keyboard.num2().onPressDo({ self.seleccionarAuto(autos.get(1)) })
         keyboard.num3().onPressDo({ self.seleccionarAuto(autos.get(2)) })
+
+        //Movimientos
+        keyboard.w().onPressDo({ autoPrincipal.moverse(norte) })
+        keyboard.s().onPressDo({ autoPrincipal.moverse(sur) })
+        keyboard.a().onPressDo({ autoPrincipal.moverse(este) })
+        keyboard.d().onPressDo({ autoPrincipal.moverse(oeste) })
+        keyboard.x().onPressDo({ autoPrincipal.repetirUltimoMovimiento()})
     }
 
     method seleccionarAuto(nuevoPrincipal) {

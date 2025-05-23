@@ -2,6 +2,7 @@ import dependencias-autos.*
 import autos.*
 import pedidos.*
 import wollok.game.*
+import direcciones-regiones.*
 
 describe "Test con dos dependencias"{
     
@@ -154,13 +155,45 @@ describe "Test de registro de pedidos de cada dependencia" {
     }
 }
 
-/*
-describe "Parte 4 game" {
-    const cachito = new Corsa(color="rojo")
-    cachito.position(game.at(1,2))
 
-    test "Cachito paso por la fila 1"{
+describe "Pruebas de las filas y las regiones" {
+    //Autos
+    const cachito = new Corsa(color="rojo", position=game.at(1,2))
+    const corsaVerde = new Corsa(color="verde", position=game.at(3,6))
 
+    //Regiones
+    const regionRec1 = new Region(minX=3, maxX=5, minY=3, maxY=8)
+    const regionRec2 = new Region(minX=1, maxX=4, minY=5, maxY=9)
+    const unionReg1y2 = new UnionRegiones (regionesInternas=regionRec1.union(regionRec2))
+    const interReg1y2 = new InterRegiones (regionesInternas=regionRec1.interseccion(regionRec2))
+
+    test "Cachito paso por la fila 1, corsa corsaVerde no"{
+        assert.that(cachito.pasoPorFila(1))
+        assert.notThat(corsaVerde.pasoPorFila(1))
+    }
+
+    test "Cachito no paso por la filas 1,2 y 3 y corsaVerde si paso por las filas [3]"{
+        assert.notThat(cachito.recorrioFilas([1,2,3]))
+        assert.that(corsaVerde.recorrioFilas([3]))
+    }
+
+    test "Cachito paso por la posicion 1,2"{
+        assert.that(cachito.pasoPor(game.at(1,2)))
+        assert.notThat(corsaVerde.pasoPor(game.at(1,2)))
+    }
+
+    test "Cachito no esta en la region reionRectangular pero si corsaVerde"{
+        assert.notThat(cachito.estaEn(regionRec1))
+        assert.that(corsaVerde.estaEn(regionRec1))
+    }
+
+    test "Cachito no esta en la union de region reionRec 1 y 2 pero si corsaVerde"{
+        assert.notThat(cachito.estaEn(unionReg1y2))
+        assert.that(corsaVerde.estaEn(unionReg1y2))
+    }
+
+    test "Cachito no esta en la interseccion de region regionRec 1 y 2, pero si el corsaVerde"{
+        assert.notThat(cachito.estaEn(interReg1y2))
+        assert.that(corsaVerde.estaEn(interReg1y2))
     }
 }
-*/

@@ -1,4 +1,6 @@
 import wollok.game.*
+import direcciones-regiones.*
+
 
 /*Palabra reservada class para crear una clase, tengo que ponerle los metodos que tendra, y los atributos
 que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o con el property*/
@@ -9,8 +11,9 @@ que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o 
 class Corsa {
     /*// Esto es lo mismo: --- new Position(x = 0, y = 0). cada vez que movamos a algo, va a crear una 
     nueva instancia de position, guardandola en la variable*/
-    const ubicaciones = [] //guardamos la ubicaciones donde paso el corso
+    const ubicaciones = [position] //guardamos la ubicaciones donde paso el corso
     var position = game.at(4,7)
+    var ultimoMovimiento = null
 
     //Atributos de cada corsa basicos 
     var property color
@@ -24,8 +27,18 @@ class Corsa {
     method pasoPor(posicion) = ubicaciones.contains(posicion)
     method pasoPorFila(numero) = ubicaciones.map({pos => pos.x()}).contains(numero)
     method recorrioFilas(listaNumeros) = listaNumeros.all({n => self.pasoPorFila(n)})
+    method estaEn(region) = region.contiene(self.position())
 
     //Metodos de indicacion
+    method repetirUltimoMovimiento(){
+        if (ultimoMovimiento != null) {self.moverse(ultimoMovimiento)}
+    }
+
+    method moverse(direccion) {
+        self.position(direccion.proximaPosicion(self.position()))
+        ultimoMovimiento = direccion
+    }
+
     method position(nuevaPosicion) {
         position = nuevaPosicion
         ubicaciones.add(nuevaPosicion)
