@@ -1,19 +1,17 @@
+import mainExample.fin
 import wollok.game.*
 import direcciones-regiones.*
-
 
 /*Palabra reservada class para crear una clase, tengo que ponerle los metodos que tendra, y los atributos
 que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o con el property*/
 
 //Clases de autos
 
-//Al momento de instanciar, debo especificar el color
 class Corsa {
-    /*// Esto es lo mismo: --- new Position(x = 0, y = 0). cada vez que movamos a algo, va a crear una 
-    nueva instancia de position, guardandola en la variable*/
-    const ubicaciones = [position] //guardamos la ubicaciones donde paso el corso
-    var position = game.at(4,7)
+    const ubicaciones = [] //guardamos la ubicaciones donde paso el corsa
+    var position 
     var ultimoMovimiento = null
+    var resistencia = 2
 
     //Atributos de cada corsa basicos 
     var property color
@@ -28,8 +26,13 @@ class Corsa {
     method pasoPorFila(numero) = ubicaciones.map({pos => pos.x()}).contains(numero)
     method recorrioFilas(listaNumeros) = listaNumeros.all({n => self.pasoPorFila(n)})
     method estaEn(region) = region.contiene(self.position())
+    method resistencia() = resistencia
 
     //Metodos de indicacion
+    method bajarResistencia(){
+        resistencia = 0.max(resistencia - 1)
+    }
+
     method repetirUltimoMovimiento(){
         if (ultimoMovimiento != null) {self.moverse(ultimoMovimiento)}
     }
@@ -59,25 +62,6 @@ class AutoEspecial {
     var property capacidad
     var property peso
     var property velocidadMaxima
-}
-/*
-class AutoEspecial {
-    //Aca, sus propiedades se instancian, pero una vez que eso pasa, no se puede cambiar
-    //Simulamos que el auto solo puede cambiar su color, eso si podria, ya que es var, no const
-    var property color
-    const property capacidad
-    const property peso
-    const property velocidadMaxima
-
-    //Limitamos la velocidad maxima de todos los autos, si excede 200, con un objeto externo
-    //la velocidad no se podra cambiar, y si pasa 200, devolvera 200
-    method velocidadMaxima() = velocidadMaxima.min(topeVelMax.tope())
-}
-*/
-
-//Tope de velocidad que afecta a los objetos de la clase AutoEspecial
-object topeVelMax {
-    var property tope = 200
 }
 
 object trafic {
@@ -126,11 +110,44 @@ object verde {
     method image() {return "autitoVerde.png"} 
 }
 
+//Paredes
 
-/*
-Estructura para crear un objeto, debemos darle los atributos no definidos
-const listaDeCorsa = [] //Lista vacia, pero tendra tres objetos corsa.
-listaDeCorsa.add(new Corsa(color="rojo"))  Crea una instacia de la clase Corsa con el color rojo
-listaDeCorsa.add(new Corsa(color="rojo"))  Crea una instacia de la clase Corsa con el color rojo
-listaDeCorsa.add(new Corsa(color="verde"))  Crea una instacia de la clase Corsa con el color verde
-*/
+class Pared {
+    var resistencia = 3
+    var tipoResistencia = resistente
+    var property position = game.at(0.randomUpTo(16),0.randomUpTo(16))
+    method image() = tipoResistencia.image()
+    method decirResistencia() = "He chocado, ahora mi resistencia es de " + resistencia
+
+    //Metodos de indicacion
+    method bajarResistencia() {
+        resistencia = 0.max(resistencia - 1)
+        tipoResistencia = tipoResistencia.cambiarResistencia()
+        if (resistencia > 0) {
+            game.say(self, self.decirResistencia())
+        }
+        else{
+            game.say(self, "Me destruyeron")
+            game.removeVisual(self)
+        } 
+    }
+}
+
+//Tipos de paredes
+object resistente {
+    method image () = "paredLadrillos3.jpg"
+
+    method cambiarResistencia() = dura
+}
+
+object dura {
+    method image () = "paredLadrillos2.jpg"
+
+    method cambiarResistencia() = fragil
+}
+
+object fragil {
+    method image () = "paredLadrillos1.jpg"
+
+    method cambiarResistencia() = self
+}

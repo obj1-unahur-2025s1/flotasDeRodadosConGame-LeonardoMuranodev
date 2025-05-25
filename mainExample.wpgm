@@ -2,74 +2,73 @@ import wollok.game.*
 import autos.*
 import direcciones-regiones.*
 
-object gestorAutos {
-    const autos = []
-    var property autoPrincipal = null
+//Muestra fin del juego cuando la resistencia del auto sea  0
+object fin {
+    var property position = game.center() 
+    method text () = "¡Fin del Juego!"
+    method textColor () = "FF0000FF"
+    method decirFin() = game.addVisual(self)
+}
 
-    method autos() = autos
+object prueba {
+    var autoPrincipal = null
 
-    //metodos indicacion
+    method inicializar(){
+        //Agregamos al perosnaje principal
+        const cachito = new Corsa(color=rojo, position=game.center())
+        autoPrincipal = cachito
+        game.addVisualCharacter(autoPrincipal)
 
-    method agregarAutos(listaAutos){
-        autos.addAll(listaAutos)
-    }
-
-    method inicializar(listaAutos) {
-        //Agregamos todos los autos
-        self.agregarAutos(listaAutos)
-
-        //Seleccionamos el primero como principal, y los demas, los agregamos como visuales
-        self.seleccionarAuto(autos.first())
-        autos.drop(1).forEach({auto => game.addVisual(auto)})
+        //Caracteriticas del juego
+        game.title("Prueba corsa")
+        game.width(15)
+        game.height(15)
 
         //Eventos de teclado
-
-        //cambios de colores: r:red, g:green y b:blue
+        //Cambiar colores
         keyboard.r().onPressDo({ autoPrincipal.color(rojo) })
         keyboard.g().onPressDo({ autoPrincipal.color(verde) })
         keyboard.b().onPressDo({ autoPrincipal.color(azul) })
-
-        //Cambio del principal
-        keyboard.num1().onPressDo({ self.seleccionarAuto(autos.get(0)) })
-        keyboard.num2().onPressDo({ self.seleccionarAuto(autos.get(1)) })
-        keyboard.num3().onPressDo({ self.seleccionarAuto(autos.get(2)) })
+        
 
         //Movimientos
         keyboard.w().onPressDo({ autoPrincipal.moverse(norte) })
         keyboard.s().onPressDo({ autoPrincipal.moverse(sur) })
         keyboard.a().onPressDo({ autoPrincipal.moverse(este) })
         keyboard.d().onPressDo({ autoPrincipal.moverse(oeste) })
-        keyboard.x().onPressDo({ autoPrincipal.repetirUltimoMovimiento()})
-    }
+        keyboard.l().onPressDo({ autoPrincipal.repetirUltimoMovimiento() })
 
-    method seleccionarAuto(nuevoPrincipal) {
-        //Si es diferente al auto qeu ya estaba...
-        if (autoPrincipal != nuevoPrincipal) {
-            //Si es diferente a null, es para evaluar que ya habia un auto valido antes
-            if (autoPrincipal != null) {
-                game.removeVisual(autoPrincipal)
-                game.addVisual(autoPrincipal)
+        //Creamos dos paredes en psociones random del mapa cada 3 segundos
+        game.onTick(3000, "crear dos paredes", { => 
+            const pared1 = new Pared()
+            const pared2 = new Pared()
+            game.addVisual(pared1) 
+            game.addVisual(pared2)
+        })
+
+        //Si el auto choca con una pared, se baja la resistencia de la pared y el auto
+        game.onCollideDo(autoPrincipal, {elem =>
+            if (game.hasVisual(autoPrincipal)) {
+                elem.bajarResistencia()
+                autoPrincipal.bajarResistencia()
+            }   
+            //Si la resitencia es cero, pausamos la aparicion de paredes y 
+            //removemos todos los visuales. Ademas agregamos el final del juego
+            if (autoPrincipal.resistencia() == 0) {
+                game.removeVisual(self)
+                game.removeTickEvent("crear dos paredes")
+                game.allVisuals().forEach({visual => game.removeVisual(visual)})
+                fin.decirFin()
             }
-            
-            autoPrincipal = nuevoPrincipal
-            game.addVisualCharacter(autoPrincipal)
         }
+        )
+
+        game.showAttributes(autoPrincipal)
+
+        game.start()
     }
 }
 
 program ejemplo {
-
-    //Caracteriticas del juego
-    game.title("Prueba corsa")
-    game.width(15)
-    game.height(15)
-
-    //Objetos
-    const cachito = new Corsa(color=rojo)
-    const pepito = new Corsa(color=azul, position=game.at(5,7))
-    const juancito = new Corsa(color=verde, position=game.at(6,7))
-
-    gestorAutos.inicializar([cachito, pepito, juancito])
-
-    game.start()
+    prueba.inicializar()
 }
