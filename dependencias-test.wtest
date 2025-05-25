@@ -12,13 +12,13 @@ describe "Test con dos dependencias"{
 
     //Autos
     //En comun
-    const cachito = new Corsa(color="rojo")
+    const cachito = new Corsa(color=rojo)
 
     //Deportes
-    const corsaAzul = new Corsa(color="azul")
-    const corsaVerde = new Corsa(color="verde")
+    const corsaAzul = new Corsa(color=azul)
+    const corsaVerde = new Corsa(color=verde)
     const kwidConTanque1 = new RenaultKwid(tieneTanqueAdicional=true)
-    const autoEspecial = new AutoEspecial(color="beige",capacidad=5,velocidadMaxima=160,peso=1200)
+    const autoEspecial = new AutoEspecial(color=beige,capacidad=5,velocidadMaxima=160,peso=1200)
 
     //Cultura
     const kwidConTanque2 = new RenaultKwid(tieneTanqueAdicional=true)
@@ -38,8 +38,8 @@ describe "Test con dos dependencias"{
     test "Comprobar asserts de Deportes" {
         assert.equals(1300 + 1300 + 1300 + 1350 + 1200 ,deportes.pesoTotalFlota())
         assert.that(deportes.estaBienEquipada())
-        assert.equals(7, deportes.capacidadTotalEnColor("azul"))
-        assert.equals("beige", deportes.colorRodadoMasRapido())
+        assert.equals(7, deportes.capacidadTotalEnColor(azul))
+        assert.equals(beige, deportes.colorRodadoMasRapido())
         assert.that(deportes.esGrande())
         assert.equals(45 - deportes.capacidadTotal(), deportes.capacidadFaltante())
     }
@@ -47,8 +47,8 @@ describe "Test con dos dependencias"{
     test "Comprobar asserts de Cultura" {
         assert.equals(1300 + 1350 + 1350 + 1200 + trafic.peso(), cultura.pesoTotalFlota())
         assert.notThat(cultura.estaBienEquipada())
-        assert.equals(10, cultura.capacidadTotalEnColor("azul"))
-        assert.equals("rojo", cultura.colorRodadoMasRapido())
+        assert.equals(10, cultura.capacidadTotalEnColor(azul))
+        assert.equals(rojo, cultura.colorRodadoMasRapido())
         assert.notThat(cultura.esGrande())
         assert.equals(31 - cultura.capacidadTotal(), cultura.capacidadFaltante())
     }
@@ -57,14 +57,14 @@ describe "Test con dos dependencias"{
 describe "Prubas de los pedidos" {
     
     //Pedidos
-    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = ["verde", "azul"])
-    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = ["rojo"])
+    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = [verde, azul])
+    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = [rojo])
     const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 11, cantidadPasajeros = 10, coloresIncompatibles = [])
     
     //Autos
-    const cachito = new Corsa(color="rojo")
-    const autoEspecial = new AutoEspecial(color="beige",capacidad=5,velocidadMaxima=160,peso=1200)
-    const corsaVerde = new Corsa(color="verde")
+    const cachito = new Corsa(color=rojo)
+    const autoEspecial = new AutoEspecial(color=beige,capacidad=5,velocidadMaxima=160,peso=1200)
+    const corsaVerde = new Corsa(color=verde)
 
     method initialize(){
         trafic.motor(bataton)
@@ -102,18 +102,18 @@ describe "Test de registro de pedidos de cada dependencia" {
     const cultura = new Dependencia (empleados=31)
 
     //Pedidos
-    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = ["rojo", "azul"])
-    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = ["verde", "azul"])
-    const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 9, cantidadPasajeros = 10, coloresIncompatibles = ["blanco", "azul"])
-    const pedido4 = new Pedido(distanciaEnKm = 1500, tiempoEnHs = 13, cantidadPasajeros = 2, coloresIncompatibles = ["rojo"])
+    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = [rojo, azul])
+    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = [verde, azul])
+    const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 9, cantidadPasajeros = 10, coloresIncompatibles = [blanco, azul])
+    const pedido4 = new Pedido(distanciaEnKm = 1500, tiempoEnHs = 13, cantidadPasajeros = 2, coloresIncompatibles = [rojo])
 
     //Autos
     //Deportes
-    const corsaAzul = new Corsa(color="azul")
-    const corsaVerde = new Corsa(color="verde")
+    const corsaAzul = new Corsa(color=azul)
+    const corsaVerde = new Corsa(color=verde)
 
     //Cultura
-    const cachito = new Corsa(color="rojo")
+    const cachito = new Corsa(color=rojo)
     const kwidSinTanque = new RenaultKwid(tieneTanqueAdicional=false)
 
     method initialize(){
@@ -138,11 +138,11 @@ describe "Test de registro de pedidos de cada dependencia" {
     }
 
     test "SI es cierto que el color azul es restringido en todos los pedidos de la dep deportes" {
-        assert.that(deportes.esColorIncompatibleDeTodosLosPedidos("azul"))
+        assert.that(deportes.esColorIncompatibleDeTodosLosPedidos(azul))
     }
     
     test "NO es cierto que el color azul es restringido en todos los pedidos de la dep cultura" {
-        assert.notThat(cultura.esColorIncompatibleDeTodosLosPedidos("azul"))
+        assert.notThat(cultura.esColorIncompatibleDeTodosLosPedidos(azul))
     }
 
     test "EL pedido2 y pedido3 no pueden ser llevados por ninguno de los autos de la dep deportes"{
@@ -155,17 +155,21 @@ describe "Test de registro de pedidos de cada dependencia" {
     }
 }
 
-
 describe "Pruebas de las filas y las regiones" {
     //Autos
-    const cachito = new Corsa(color="rojo", position=game.at(1,2))
-    const corsaVerde = new Corsa(color="verde", position=game.at(3,6))
+    const cachito = new Corsa(color=rojo, position=game.at(1,2))
+    const corsaVerde = new Corsa(color=verde, position=game.at(3,6))
 
     //Regiones
     const regionRec1 = new Region(minX=3, maxX=5, minY=3, maxY=8)
     const regionRec2 = new Region(minX=1, maxX=4, minY=5, maxY=9)
     const unionReg1y2 = new UnionRegiones (regionesInternas=regionRec1.union(regionRec2))
     const interReg1y2 = new InterRegiones (regionesInternas=regionRec1.interseccion(regionRec2))
+
+    method initialize() {
+        cachito.position(game.at(1,2))
+        corsaVerde.position(game.at(3,6)) 
+    }
 
     test "Cachito paso por la fila 1, corsa corsaVerde no"{
         assert.that(cachito.pasoPorFila(1))
@@ -195,5 +199,42 @@ describe "Pruebas de las filas y las regiones" {
     test "Cachito no esta en la interseccion de region regionRec 1 y 2, pero si el corsaVerde"{
         assert.notThat(cachito.estaEn(interReg1y2))
         assert.that(corsaVerde.estaEn(interReg1y2))
+    }
+}
+
+describe "Pruebas de los metodos extras de las dependencias" {
+    const deportes = new Dependencia (empleados=45)
+
+    //Autos
+    const corsaAzul = new Corsa(color=azul)
+    const corsaVerde = new Corsa(color=verde)
+    const cachito = new Corsa(color=rojo)
+    const kwidSinTanque = new RenaultKwid(tieneTanqueAdicional=false)
+
+    //Pedidos
+    const pedido1 = new Pedido(distanciaEnKm = 1000, tiempoEnHs = 8, cantidadPasajeros = 4, coloresIncompatibles = [rojo, azul])
+    const pedido2 = new Pedido(distanciaEnKm = 900, tiempoEnHs = 6, cantidadPasajeros = 4, coloresIncompatibles = [verde, azul])
+    const pedido3 = new Pedido(distanciaEnKm = 1100, tiempoEnHs = 9, cantidadPasajeros = 10, coloresIncompatibles = [blanco, azul])
+    const pedido4 = new Pedido(distanciaEnKm = 1500, tiempoEnHs = 13, cantidadPasajeros = 2, coloresIncompatibles = [rojo, beige])
+
+    method initialize() {
+        deportes.agregarPedidos([pedido1, pedido2, pedido3, pedido4])
+        deportes.agregarMuchosAFlota([corsaAzul, corsaVerde, cachito, kwidSinTanque, trafic])
+    }
+
+    test "el conjunto de colores que son incompatibles para, al menos, un pedido es {rojo, verde, azul, blanco y beige}"{
+        assert.equals(#{rojo, verde, azul, blanco, beige}, deportes.coloresIncompatiblesParaAlmenosUnPedido())
+    }
+
+    test "El color mas popular de la dependencia deportes es el azul" {
+        assert.equals(azul, deportes.colorMasPopular())
+    }
+
+    test "El orden de llegada de la trafic de la dependencia deportes es 4" {
+        assert.equals(4, deportes.ordenDeLlegada(trafic))
+    }
+
+    test "Los autos que llegaron antes que cachito son [corsaAzul, corsaVerde]" {
+        assert.equals([corsaAzul, corsaVerde], deportes.vehiculosQueLlegaronAntesQue(cachito))
     }
 }

@@ -39,6 +39,27 @@ class Dependencia {
         return pedidos.all({pedido => pedido.coloresIncompatibles().contains(unColor)})
     }
 
+
+    //Extras del ejercicio
+    method coloresIncompatiblesParaAlmenosUnPedido(){
+        const colores = []
+        pedidos.forEach({pedido => colores.add(pedido.coloresIncompatibles())})
+        return colores.flatten().asSet()
+    }
+
+    method colorMasPopular(){
+        const coloresDeAutos = flota.map({auto => auto.color()})
+        const coloresUnicos = coloresDeAutos.asSet()
+        return coloresUnicos.max({color => coloresDeAutos.occurrencesOf(color)})
+    } 
+
+    method ordenDeLlegada(vehiculo) {
+        var ret = null
+        (0..flota.size() - 1).forEach({n => if(flota.get(n) == vehiculo) ret = n})
+        return ret
+    }
+
+    method vehiculosQueLlegaronAntesQue(vehiculo) = flota.take(self.ordenDeLlegada(vehiculo))
     //Metodos de indicacion
     method agregarAFlota(rodado){
         flota.add(rodado)

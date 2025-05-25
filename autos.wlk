@@ -9,7 +9,7 @@ que quiero definir al momento de crear el objeto, debo poner un metodo vacio, o 
 
 class Corsa {
     const ubicaciones = [] //guardamos la ubicaciones donde paso el corsa
-    var position 
+    var position = game.center()
     var ultimoMovimiento = null
     var resistencia = 2
 
@@ -51,7 +51,7 @@ class Corsa {
 //Al momento de instanciar, debo especificar si tiene tanque adicional
 class RenaultKwid {
     var property tieneTanqueAdicional
-    method color() = "azul"
+    method color() = azul
     method capacidad() = if(tieneTanqueAdicional) 3 else 4
     method velocidadMaxima() = if(tieneTanqueAdicional) 110 else 120
     method peso() = 1200 + if(tieneTanqueAdicional) 150 else 0
@@ -69,7 +69,7 @@ object trafic {
     var property motor = pulenta
 
     //Metodos de consulta
-    method color() = "blanco"
+    method color() = blanco
     method capacidad() = interior.capacidad()
     method velocidadMaxima() = motor.velocidadMaxima()
     method peso() = 4000 + interior.peso() + motor.peso()
@@ -109,6 +109,10 @@ object azul {
 object verde {
     method image() {return "autitoVerde.png"} 
 }
+
+object blanco {}
+
+object beige {}
 
 //Paredes
 
